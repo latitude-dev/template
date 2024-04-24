@@ -7,7 +7,6 @@ FROM base AS builder
 
 WORKDIR /usr/src/app
 
-COPY package-lock.json* .
 COPY package.jso[n] .
 COPY latitude.json .
 
@@ -18,7 +17,7 @@ FROM builder AS runner
 
 WORKDIR /usr/src/app
 
-COPY --from=builder /usr/src/app/node_module[s] ./
+COPY --from=builder /usr/src/app/node_module[s] ./node_modules
 COPY --from=builder /usr/src/app/.latitude ./
 COPY --from=builder /usr/src/app/latitude.json ./latitude.json
 COPY . .
@@ -30,4 +29,3 @@ WORKDIR /usr/src/app/build
 EXPOSE 3000
 
 CMD ["node", "build"]
-
